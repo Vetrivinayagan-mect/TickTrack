@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "952526653289",
+    "project_id": "ticktrack-a0a4c",
+    "storage_bucket": "ticktrack-a0a4c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952526653289:android:a3ee98cc4f87c1584d5ff8",
+        "android_client_info": {
+          "package_name": "com.example.ticktrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiqM27vHqLNZ6UnriSgu3xed_fH-cjlqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
