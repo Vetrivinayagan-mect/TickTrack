@@ -14,9 +14,11 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   FocusNode _focusNode1 = FocusNode();
   FocusNode _focusNode2 = FocusNode();
   FocusNode _focusNode3 = FocusNode();
+  FocusNode _focusNode4 = FocusNode();
   final email = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
+  final name = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,6 +33,9 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     _focusNode3.addListener(() {
       setState(() {});
     });
+    _focusNode4.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -38,26 +43,33 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     _focusNode1.dispose();
     _focusNode2.dispose();
     _focusNode3.dispose();
+    _focusNode4.dispose();
     email.dispose();
     password.dispose();
     confirmPassword.dispose();
+    name.dispose();
     super.dispose();
   }
 
   String? emailError;
   String? passwordError;
   String? confirmPasswordError;
+  String? nameError;
 
   void validateForm() {
     setState(() {
       emailError = null;
       passwordError = null;
       confirmPasswordError = null;
+      nameError = null;
 
       if (email.text.isEmpty ||
           !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
               .hasMatch(email.text)) {
         emailError = "Enter a valid email";
+      }
+      if (name.text.length < 3) {
+        nameError = "Name must be at least 3 characters";
       }
       if (password.text.length < 6) {
         passwordError = "Password must be at least 6 characters";
@@ -69,9 +81,10 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
 
     if (emailError == null &&
         passwordError == null &&
-        confirmPasswordError == null) {
+        confirmPasswordError == null &&
+        nameError == null) {
       AuthenticationRemote().register(context, email.text, password.text,
-          confirmPassword.text, widget.show);
+          confirmPassword.text, widget.show, name.text);
     }
   }
 
@@ -91,6 +104,10 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                   children: [
                     textfield(email, _focusNode1, Icons.email, "Enter Email"),
                     if (emailError != null) errorMessage(emailError!),
+                    SizedBox(height: 20),
+                    textfield(
+                        name, _focusNode4, Icons.person, "Enter FullName"),
+                    if (nameError != null) errorMessage(nameError!),
                     SizedBox(height: 20),
                     textfield(password, _focusNode2, Icons.password,
                         "Enter Password"),

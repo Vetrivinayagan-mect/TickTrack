@@ -9,12 +9,12 @@ class Firestore_DataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<bool> CreateUser(String email) async {
+  Future<bool> CreateUser(String email, String name) async {
     try {
       await _firestore
           .collection('user')
           .doc(_auth.currentUser!.uid)
-          .set({"id": _auth.currentUser!.uid, "email": email});
+          .set({"id": _auth.currentUser!.uid, "email": email, "name": name});
       return true;
     } catch (e) {
       return true;
@@ -41,6 +41,20 @@ class Firestore_DataSource {
       return true;
     } catch (e) {}
     return true;
+  }
+
+  Future<String?> get_name() async {
+    try {
+      DocumentSnapshot userDoc =
+          await _firestore.collection('user').doc(_auth.currentUser!.uid).get();
+      if (userDoc.exists) {
+        return userDoc["name"];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<bool> Update_Note(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // If using Firebase
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ticktrack/const/colors.dart';
 import 'package:ticktrack/screen/login.dart';
 import 'package:ticktrack/widgets/stream_note.dart';
-
+import 'package:ticktrack/data/firestore_data.dart';
 import 'add_screen.dart';
 
 class Home_Screen extends StatefulWidget {
@@ -32,13 +32,26 @@ class _Home_ScreenState extends State<Home_Screen> {
             SizedBox(
               width: 10,
             ),
-            Text(
-              "Hi, Vetri Vinayagan",
-              style: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.grey),
-            ),
+            FutureBuilder<String?>(
+                future: Firestore_DataSource().get_name(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData || snapshot.data == null) {
+                    return Text(
+                      "Hi, Guest",
+                      style: TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.grey),
+                    );
+                  }
+                  return Text(
+                    "Hi, ${snapshot.data}",
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.grey),
+                  );
+                })
           ],
         ),
         actions: [

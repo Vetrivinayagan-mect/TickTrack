@@ -6,7 +6,7 @@ import 'package:ticktrack/screen/home.dart';
 
 abstract class AuthenticationDataSource {
   Future<void> register(BuildContext context, String email, String password,
-      String confirmPassword, VoidCallback show);
+      String confirmPassword, VoidCallback show, String name);
   Future<void> login(
       BuildContext context, String email, String password, VoidCallback show);
 }
@@ -14,13 +14,13 @@ abstract class AuthenticationDataSource {
 class AuthenticationRemote extends AuthenticationDataSource {
   @override
   Future<void> register(BuildContext context, String email, String password,
-      String confirmPassword, VoidCallback show) async {
+      String confirmPassword, VoidCallback show, String name) async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: email.trim(), password: password.trim())
           .then((value) {
-        Firestore_DataSource().CreateUser(email);
+        Firestore_DataSource().CreateUser(email, name);
       });
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Home_Screen(show)));

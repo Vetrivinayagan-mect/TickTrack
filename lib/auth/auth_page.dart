@@ -12,9 +12,11 @@ class Auth_Page extends StatefulWidget {
 class _Auth_PageState extends State<Auth_Page> {
   bool a = true;
   void to() {
-    setState(() {
-      a = !a;
-    });
+    setState(
+      () {
+        a = !a;
+      },
+    );
   }
 
   @override
